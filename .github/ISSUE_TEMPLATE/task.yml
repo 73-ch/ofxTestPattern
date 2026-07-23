@@ -1,0 +1,37 @@
+name: タスク
+description: エージェントに割り当てる開発タスク
+title: "[Task] "
+body:
+  - type: textarea
+    id: background
+    attributes:
+      label: 背景 / 目的
+      description: なぜこのタスクが必要か
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 受入条件
+      description: 何ができたら完了とみなすか(箇条書き)
+      placeholder: |
+        - [ ] ○○ができる
+        - [ ] テストが通る
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: 対象範囲
+      description: 触ってよいファイル・ディレクトリ / 触ってはいけない領域
+  - type: dropdown
+    id: agent
+    attributes:
+      label: 担当エージェント(ラベルも付けること)
+      options:
+        - agent:claude
+        - agent:codex
+        - agent:antigravity
+        - 未定
+    validations:
+      required: true

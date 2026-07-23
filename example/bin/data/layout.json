@@ -1,0 +1,33 @@
+{
+  "name": "demo",
+  "constraints": {
+    "moduleSize": 0
+  },
+  "style": {
+    "font": "",
+    "borderColor": "#00FF00"
+  },
+  "surfaces": [
+    { "name": "Front", "width": 4160, "height": 1620, "gridSize": 200, "color": "#00FFFF" },
+    { "name": "Left",  "width": 2560, "height": 1440, "gridSize": 160, "color": "#00FFFF" },
+    { "name": "Right", "width": 2560, "height": 1440, "gridSize": 160, "color": "#00FFFF" },
+    { "name": "Floor", "width": 3840, "height": 2400, "gridSize": 320, "color": "#0064FF" }
+  ],
+  "outputs": [
+    { "name": "Front-out", "width": 3840, "height": 2160 },
+    { "name": "Left-out",  "width": 3840, "height": 2160 },
+    { "name": "Right-out", "width": 3840, "height": 2160 },
+    { "name": "Floor-1",   "width": 3840, "height": 2160 },
+    { "name": "Floor-2",   "width": 3840, "height": 2160 }
+  ],
+  "slices": [
+    { "id": "front-A", "surface": "Front", "src": [0,    0,    3840, 1620], "output": "Front-out", "dst": [0,   0]    },
+    { "id": "front-B", "surface": "Front", "src": [3840, 0,    320,  540],  "output": "Front-out", "dst": [0,   1620] },
+    { "id": "front-C", "surface": "Front", "src": [3840, 540,  320,  540],  "output": "Front-out", "dst": [320, 1620] },
+    { "id": "front-D", "surface": "Front", "src": [3840, 1080, 320,  540],  "output": "Front-out", "dst": [640, 1620] },
+    { "id": "left-A",  "surface": "Left",  "src": [0,    0,    2560, 1440], "output": "Left-out",  "dst": [0,   0]    },
+    { "id": "right-A", "surface": "Right", "src": [0,    0,    2560, 1440], "output": "Right-out", "dst": [0,   0]    },
+    { "id": "floor-A", "surface": "Floor", "src": [0,    0,    3840, 2160], "output": "Floor-1",   "dst": [0,   0]    },
+    { "id": "floor-B", "surface": "Floor", "src": [0,    2160, 3840, 240],  "output": "Floor-2",   "dst": [0,   0]    }
+  ]
+}

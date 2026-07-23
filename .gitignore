@@ -1,0 +1,7 @@
+.DS_Store
+obj/
+*.app/
+*.xcodeproj/
+example/bin/data/export/
+example/bin/data/snap_*.png
+example/bin/data/layout-packed.json
