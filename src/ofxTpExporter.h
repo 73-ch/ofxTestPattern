@@ -19,10 +19,12 @@ public:
 	bool exportAll(const std::string & dirPath, const ofxTp::LayoutDef & layout,
 	               const std::function<ofTexture &(const std::string &)> & patternTexture);
 
+	// write one FBO to a PNG (absolute path). also used for live captures
+	bool savePng(ofFbo & fbo, const std::string & absPath, bool keepAlpha = false);
+
 private:
 	void drawOutline(const ofRectangle & r, const ofColor & c, int px);
 	void drawSliceLabel(const ofxTp::SliceDef & sl, const ofRectangle & rect, const ofColor & textColor);
-	bool saveFbo(ofFbo & fbo, const std::string & absPath, bool keepAlpha = false);
 	bool writeCrops(const std::string & absDir, const ofxTp::LayoutDef & layout);
 	static ofColor sliceColor(int indexInSurface);
 

@@ -8,7 +8,6 @@ public:
 	void update() override;
 	void draw() override;
 	void keyPressed(int key) override;
-	void saveSnapshots();
 
 	ofxTestPattern tp;
 	int viewOutput = -1;      // -1 = preview, >= 0 = single output

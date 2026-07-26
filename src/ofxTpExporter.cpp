@@ -39,7 +39,7 @@ bool ofxTpExporter::exportAll(const std::string & dirPath, const LayoutDef & lay
 		ofSetColor(255);
 		patternTexture(s.name).draw(0, 0);
 		fbo.end();
-		written += saveFbo(fbo, p + s.name + "_src.png");
+		written += savePng(fbo, p + s.name + "_src.png");
 
 		fbo.begin();
 		for (auto & sl : layout.slices) {
@@ -48,7 +48,7 @@ bool ofxTpExporter::exportAll(const std::string & dirPath, const LayoutDef & lay
 			drawSliceLabel(sl, sl.src, ofColor(255));
 		}
 		fbo.end();
-		written += saveFbo(fbo, p + "overlay_" + s.name + "_src.png");
+		written += savePng(fbo, p + "overlay_" + s.name + "_src.png");
 
 		// parts: transparent background so it composites over anything;
 		// labels in the slice color stay visible on white and black alike
@@ -60,7 +60,7 @@ bool ofxTpExporter::exportAll(const std::string & dirPath, const LayoutDef & lay
 			drawSliceLabel(sl, sl.src, colors[&sl]);
 		}
 		fbo.end();
-		written += saveFbo(fbo, p + "parts_" + s.name + "_src.png", true);
+		written += savePng(fbo, p + "parts_" + s.name + "_src.png", true);
 	}
 
 	// ---- per output: mapped / overlay mapped / parts mapped / masks
@@ -80,7 +80,7 @@ bool ofxTpExporter::exportAll(const std::string & dirPath, const LayoutDef & lay
 			    sl.src.width, sl.src.height, sl.src.x, sl.src.y);
 		}
 		fbo.end();
-		written += saveFbo(fbo, p + o.name + "_mapped.png");
+		written += savePng(fbo, p + o.name + "_mapped.png");
 
 		fbo.begin();
 		for (auto & sl : layout.slices) {
@@ -89,7 +89,7 @@ bool ofxTpExporter::exportAll(const std::string & dirPath, const LayoutDef & lay
 			drawSliceLabel(sl, dstRect(sl), ofColor(255));
 		}
 		fbo.end();
-		written += saveFbo(fbo, p + "overlay_" + o.name + "_mapped.png");
+		written += savePng(fbo, p + "overlay_" + o.name + "_mapped.png");
 
 		fbo.begin();
 		ofClear(0, 0, 0, 0);
@@ -99,7 +99,7 @@ bool ofxTpExporter::exportAll(const std::string & dirPath, const LayoutDef & lay
 			drawSliceLabel(sl, dstRect(sl), colors[&sl]);
 		}
 		fbo.end();
-		written += saveFbo(fbo, p + "parts_" + o.name + "_mapped.png", true);
+		written += savePng(fbo, p + "parts_" + o.name + "_mapped.png", true);
 
 		for (auto & sl : layout.slices) {
 			if (sl.output != o.name) continue;
@@ -109,7 +109,7 @@ bool ofxTpExporter::exportAll(const std::string & dirPath, const LayoutDef & lay
 			ofFill();
 			ofDrawRectangle(dstRect(sl));
 			fbo.end();
-			written += saveFbo(fbo, pm + (sl.id.empty() ? sl.surface : sl.id) + ".png");
+			written += savePng(fbo, pm + (sl.id.empty() ? sl.surface : sl.id) + ".png");
 		}
 		fbo.begin();
 		ofClear(0, 0, 0, 255);
@@ -119,7 +119,7 @@ bool ofxTpExporter::exportAll(const std::string & dirPath, const LayoutDef & lay
 			if (sl.output == o.name) ofDrawRectangle(dstRect(sl));
 		}
 		fbo.end();
-		written += saveFbo(fbo, pm + o.name + ".png");
+		written += savePng(fbo, pm + o.name + ".png");
 	}
 
 	bool cropsOk = writeCrops(dir, layout);
@@ -158,7 +158,7 @@ void ofxTpExporter::drawSliceLabel(const SliceDef & sl, const ofRectangle & rect
 	ofPopStyle();
 }
 
-bool ofxTpExporter::saveFbo(ofFbo & fbo, const std::string & absPath, bool keepAlpha) {
+bool ofxTpExporter::savePng(ofFbo & fbo, const std::string & absPath, bool keepAlpha) {
 	ofPixels px;
 	fbo.readToPixels(px);
 	if (!keepAlpha) px.setImageType(OF_IMAGE_COLOR);

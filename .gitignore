@@ -3,5 +3,6 @@ obj/
 *.app/
 *.xcodeproj/
 example/bin/data/export/
+example/bin/data/capture/
 example/bin/data/snap_*.png
 example/bin/data/layout-packed.json

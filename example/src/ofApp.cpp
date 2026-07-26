@@ -28,19 +28,10 @@ void ofApp::update() {
 
 	// OFXTP_SNAPSHOT=1 / OFXTP_EXPORT=1 -> render 30 frames, write files, quit
 	if (ofGetFrameNum() == 30 && (getenv("OFXTP_SNAPSHOT") || getenv("OFXTP_EXPORT"))) {
-		if (getenv("OFXTP_SNAPSHOT")) saveSnapshots();
+		if (getenv("OFXTP_SNAPSHOT")) tp.capture("capture");
 		if (getenv("OFXTP_EXPORT")) tp.exportAll("export");
 		ofExit();
 	}
-}
-
-void ofApp::saveSnapshots() {
-	for (auto & name : tp.getOutputNames()) {
-		ofPixels px;
-		tp.getOutputFbo(name).readToPixels(px);
-		ofSaveImage(px, "snap_" + name + ".png");
-	}
-	ofLogNotice() << "snapshots saved to " << ofToDataPath("", true);
 }
 
 void ofApp::draw() {
@@ -66,14 +57,13 @@ void ofApp::draw() {
 	}
 	// HUD is a pure overlay: never offsets or scales the image under it
 	ofDrawBitmapStringHighlight(
-	    "[t] mode  [p] pattern  [f] fit/1:1  [e] export  [0] overview  [1-" + ofToString(outputs.size())
-	    + "] output    " + viewInfo + "  |  " + tp.getStatusString(),
+	    "[t] mode  [p] pattern  [f] fit/1:1  [e] export  [c] capture  [0] overview  [1-"
+	    + ofToString(outputs.size()) + "] output    " + viewInfo + "  |  " + tp.getStatusString(),
 	    10, 20, ofColor(0, 200), ofColor(255));
 }
 
 void ofApp::keyPressed(int key) {
-	if (key == 's') saveSnapshots();
-	else if (key == 'f') fitView = !fitView;
+	if (key == 'f') fitView = !fitView;
 	else if (key == '0') viewOutput = -1;
 	else if (key >= '1' && key <= '9') {
 		int idx = key - '1';

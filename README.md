@@ -59,6 +59,14 @@ annotated versions with slice outlines / ids / coordinates baked in
 per-output masks (white = active area), plus `crops.json` and `crops.csv`
 (flat table, loads straight into a TouchDesigner Table DAT).
 
+### Capture
+
+`tp.capture("capture")` (or key `c`) saves the **live picture** — not the test
+pattern — as timestamped PNGs: every surface's content FBO at native
+resolution (`_src_<stamp>`) and every output as currently composited, i.e.
+exactly what the current mode shows (`_out_<stamp>`). Useful for handing
+actual output frames to clients, media servers or content teams.
+
 ### Auto-packing
 
 `tp.autoPack()` generates slices for surfaces that have none, packing them
@@ -78,7 +86,7 @@ rects, overlapping slices, uncovered surface pixels, module misalignment.
 4160px-wide wall, a floor spanning two 4K canvases). Build and run with
 `make -j8 Debug && make RunDebug`. Environment variables for headless
 verification (renders 30 frames, writes files, quits): `OFXTP_SNAPSHOT=1`
-(dump output FBOs), `OFXTP_EXPORT=1` (run exportAll), `OFXTP_LAYOUT=<file>`
+(run capture), `OFXTP_EXPORT=1` (run exportAll), `OFXTP_LAYOUT=<file>`
 (e.g. `layout-autopack.json`, a slice-less copy demonstrating autoPack),
 `OFXTP_SAVE=1` (save packed layout).
 
@@ -125,6 +133,13 @@ void ofApp::draw() {
 src / mapped / overlay(Slice枠・id・座標焼き込み)/ parts(透過背景の枠レイヤー)の各PNG、
 Slice別・Output別マスクPNG、`crops.json` / `crops.csv`(TD Table DAT対応のフラット表)。
 
+### キャプチャ
+
+`tp.capture("capture")`(またはキー `c`)で、テストパターンではなく**実際に出ている絵**を
+タイムスタンプ付きPNGで保存: 全Surfaceのコンテンツ(ネイティブ解像度、`_src_<stamp>`)+
+全Outputの合成結果(現在モードの見たまま、`_out_<stamp>`)。
+実出力フレームをクライアントや映像制作チームに渡す用途。
+
 ### 自動パッキング
 
 `tp.autoPack()` は slices 未定義の Surface を出力の空き領域へ自動配置する
@@ -137,7 +152,7 @@ Slice別・Output別マスクPNG、`crops.json` / `crops.csv`(TD Table DAT対応
 
 `example/` が現実的な構成(4面・5出力、Front右端320pxの3分割、
 Floorの2キャンバス分割)のサンプル。`make -j8 Debug && make RunDebug` で起動。環境変数(CI・確認用、
-30フレーム後に書き出して終了): `OFXTP_SNAPSHOT=1` 全出力PNG保存 /
+30フレーム後に書き出して終了): `OFXTP_SNAPSHOT=1` capture実行 /
 `OFXTP_EXPORT=1` exportAll実行 / `OFXTP_LAYOUT=<file>` レイアウト差し替え
 (`layout-autopack.json` = slices無しの自動パッキングデモ) /
 `OFXTP_SAVE=1` パッキング結果を layout-packed.json に保存。

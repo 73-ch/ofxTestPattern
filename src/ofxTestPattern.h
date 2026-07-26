@@ -52,7 +52,13 @@ public:
 	// uses each surface's current pattern type; dirPath is relative to bin/data
 	bool exportAll(const std::string & dirPath = "export");
 
-	// opt-in key shortcuts: t = cycle mode, p = cycle pattern type, e = exportAll
+	// captures the live picture as timestamped PNGs: every surface's content
+	// FBO at native resolution and every output as currently composited
+	// (i.e. what the current mode shows). dirPath is relative to bin/data
+	bool capture(const std::string & dirPath = "capture");
+
+	// opt-in key shortcuts: t = cycle mode, p = cycle pattern type,
+	// e = exportAll, c = capture
 	void enableKeyShortcuts();
 	void disableKeyShortcuts();
 

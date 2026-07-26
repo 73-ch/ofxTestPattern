@@ -113,6 +113,23 @@ bool ofxTestPattern::exportAll(const std::string & dirPath) {
 	});
 }
 
+bool ofxTestPattern::capture(const std::string & dirPath) {
+	std::string dir = ofToDataPath(dirPath, true);
+	ofDirectory::createDirectory(dir, false, true);
+	std::string stamp = ofGetTimestampString("%Y%m%d-%H%M%S");
+	int written = 0;
+	for (auto & s : surfaces) {
+		written += exporter.savePng(s->content,
+		    dir + "/" + layout.name + "_" + s->def.name + "_src_" + stamp + ".png");
+	}
+	for (auto & o : outputs) {
+		written += exporter.savePng(o->fbo,
+		    dir + "/" + layout.name + "_" + o->def.name + "_out_" + stamp + ".png");
+	}
+	ofLogNotice("ofxTestPattern") << "captured " << written << " images (" << stamp << ") to " << dir;
+	return written > 0;
+}
+
 //--------------------------------------------------------------
 // allocation / indexing
 
@@ -470,4 +487,5 @@ void ofxTestPattern::onKeyPressed(ofKeyEventArgs & e) {
 	if (e.key == 't') cycleMode();
 	else if (e.key == 'p') cyclePatternType();
 	else if (e.key == 'e') exportAll();
+	else if (e.key == 'c') capture();
 }

@@ -110,6 +110,9 @@ tp.enableKeyShortcuts();           // t: モード巡回 / p: パターン種巡
 
 // エクスポート(§4)
 tp.exportAll("export/");           // PNG一式 + crops.json + crops.csv
+tp.capture("capture/");            // 実出力のキャプチャ: 全Surfaceコンテンツ(ネイティブ解像度)
+                                   // + 全Output合成結果(現在のモードの見たまま)を
+                                   // タイムスタンプ付きPNGで保存
 tp.autoPack();                     // 未マップSurfaceを自動配置
 ```
 
@@ -136,6 +139,15 @@ export/
   masks/{name}_mask_{output}.png      … Output内の全有効領域マスク
   crops.json / crops.csv
 ```
+
+### キャプチャ(`capture`)
+テストパターンではなく **実際に出ている絵** を渡す用途(施工先・映像制作との共有等)。
+```
+capture/
+  {name}_{surface}_src_{yyyymmdd-HHMMSS}.png   … Surfaceコンテンツ(ネイティブ解像度)
+  {name}_{output}_out_{yyyymmdd-HHMMSS}.png    … Output合成結果(現在モードの見たまま)
+```
+タイムスタンプ付きなので連続キャプチャしても上書きされない。キー `c` でも実行。
 
 ### crops.json / crops.csv(汎用)
 ```json
