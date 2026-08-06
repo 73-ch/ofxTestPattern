@@ -109,7 +109,8 @@ tp.enableKeyShortcuts();           // t: モード巡回 / p: パターン種巡
                                    // e: 一括エクスポート / TAB: プレビュー切替
 
 // エクスポート(§4)
-tp.exportAll("export/");           // PNG一式 + crops.json + crops.csv
+tp.exportAll("export/");           // PNG一式 + crops.json + crops.csv (現在のパターン種)
+tp.exportAllPatterns("export/");   // 全パターン種を export/{TYPE}/ に一括書き出し
 tp.capture("capture/");            // 実出力のキャプチャ: 全Surfaceコンテンツ(ネイティブ解像度)
                                    // + 全Output合成結果(現在のモードの見たまま)を
                                    // タイムスタンプ付きPNGで保存
@@ -139,6 +140,11 @@ export/
   masks/{name}_mask_{output}.png      … Output内の全有効領域マスク
   crops.json / crops.csv
 ```
+
+`exportAll` は各Surfaceの **現在のパターン種** で書き出す。全パターン種の配布セットを
+作る場合は `exportAllPatterns` を使う: パターン種ごとに `{dirPath}/{TYPE}/`
+(`export/GRID/`, `export/COLOR_BARS/`, …)へ上記一式を書き出し、終了後に各Surfaceの
+パターン種を元に戻す。
 
 ### キャプチャ(`capture`)
 テストパターンではなく **実際に出ている絵** を渡す用途(施工先・映像制作との共有等)。

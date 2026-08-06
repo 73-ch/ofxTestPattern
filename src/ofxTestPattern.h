@@ -52,6 +52,11 @@ public:
 	// uses each surface's current pattern type; dirPath is relative to bin/data
 	bool exportAll(const std::string & dirPath = "export");
 
+	// runs exportAll once per pattern type into {dirPath}/{TYPE}/ subfolders
+	// (export/GRID/, export/COLOR_BARS/, ...), then restores each surface's
+	// previous pattern type
+	bool exportAllPatterns(const std::string & dirPath = "export");
+
 	// captures the live picture as timestamped PNGs: every surface's content
 	// FBO at native resolution and every output as currently composited
 	// (i.e. what the current mode shows). dirPath is relative to bin/data

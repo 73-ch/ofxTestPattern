@@ -59,6 +59,11 @@ annotated versions with slice outlines / ids / coordinates baked in
 per-output masks (white = active area), plus `crops.json` and `crops.csv`
 (flat table, loads straight into a TouchDesigner Table DAT).
 
+`exportAll` uses each surface's current pattern type. To build a hand-off
+set covering every pattern, `tp.exportAllPatterns("export")` runs the same
+export once per pattern type into `export/GRID/`, `export/COLOR_BARS/`, …
+and restores the previous pattern types afterwards.
+
 ### Capture
 
 `tp.capture("capture")` (or key `c`) saves the **live picture** — not the test
@@ -132,6 +137,10 @@ void ofApp::draw() {
 `tp.exportAll("export")`(またはキー `e`)で bin/data/export/ に一式書き出し:
 src / mapped / overlay(Slice枠・id・座標焼き込み)/ parts(透過背景の枠レイヤー)の各PNG、
 Slice別・Output別マスクPNG、`crops.json` / `crops.csv`(TD Table DAT対応のフラット表)。
+
+`exportAll` は各Surfaceの現在のパターン種で書き出す。全パターン種の配布セットを作るには
+`tp.exportAllPatterns("export")`: パターン種ごとに `export/GRID/`, `export/COLOR_BARS/`, …
+へ同じ一式を書き出し、終了後に元のパターン種へ戻す。
 
 ### キャプチャ
 

@@ -113,6 +113,19 @@ bool ofxTestPattern::exportAll(const std::string & dirPath) {
 	});
 }
 
+bool ofxTestPattern::exportAllPatterns(const std::string & dirPath) {
+	std::map<std::string, PatternType> prev;
+	for (auto & s : surfaces) prev[s->def.name] = s->type;
+	bool ok = true;
+	for (int t = (int)PatternType::GRID; t <= (int)PatternType::MOVING; ++t) {
+		auto type = (PatternType)t;
+		setPatternType("*", type);
+		ok = exportAll(dirPath + "/" + ofxTp::toString(type)) && ok;
+	}
+	for (auto & [name, type] : prev) setPatternType(name, type);
+	return ok;
+}
+
 bool ofxTestPattern::capture(const std::string & dirPath) {
 	std::string dir = ofToDataPath(dirPath, true);
 	ofDirectory::createDirectory(dir, false, true);
