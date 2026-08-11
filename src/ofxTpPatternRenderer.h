@@ -19,7 +19,7 @@ private:
 	void drawGrid(const ofxTp::SurfaceDef & s, const ofxTp::StyleDef & style);
 	void drawColorBars(float x, float y, float w, float h, bool frame);
 	void drawChecker(const ofxTp::SurfaceDef & s);
-	void drawGradient(const ofxTp::SurfaceDef & s, bool horizontal);
+	void drawGradient(const ofxTp::SurfaceDef & s, bool horizontal, bool inverted = false);
 	void drawMoving(const ofxTp::SurfaceDef & s, float time);
 	void drawBorder(float w, float h, const ofColor & c);
 

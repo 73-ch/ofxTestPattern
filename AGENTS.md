@@ -26,6 +26,7 @@ make RunDebug           # 起動
 # ヘッドレス検証(30フレーム描画→書き出し→自動終了)
 cd bin/example_debug.app/Contents/MacOS
 OFXTP_EXPORT=1 ./example_debug                            # exportAll 実行
+OFXTP_EXPORT_ALL=1 ./example_debug                        # exportAllPatterns (全パターン種) 実行
 OFXTP_SNAPSHOT=1 ./example_debug                          # 出力FBOをPNG保存
 OFXTP_LAYOUT=layout-autopack.json ./example_debug         # autoPack デモ
 ```

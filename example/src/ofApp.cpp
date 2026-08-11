@@ -26,10 +26,11 @@ void ofApp::update() {
 	}
 	tp.update();
 
-	// OFXTP_SNAPSHOT=1 / OFXTP_EXPORT=1 -> render 30 frames, write files, quit
-	if (ofGetFrameNum() == 30 && (getenv("OFXTP_SNAPSHOT") || getenv("OFXTP_EXPORT"))) {
+	// OFXTP_SNAPSHOT=1 / OFXTP_EXPORT=1 / OFXTP_EXPORT_ALL=1 -> render 30 frames, write files, quit
+	if (ofGetFrameNum() == 30 && (getenv("OFXTP_SNAPSHOT") || getenv("OFXTP_EXPORT") || getenv("OFXTP_EXPORT_ALL"))) {
 		if (getenv("OFXTP_SNAPSHOT")) tp.capture("capture");
-		if (getenv("OFXTP_EXPORT")) tp.exportAll("export");
+		if (getenv("OFXTP_EXPORT_ALL")) tp.exportAllPatterns("export");
+		else if (getenv("OFXTP_EXPORT")) tp.exportAll("export");
 		ofExit();
 	}
 }

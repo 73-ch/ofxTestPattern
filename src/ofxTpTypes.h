@@ -16,6 +16,8 @@ enum class PatternType {
 	CHECKER,
 	GRADIENT_H,
 	GRADIENT_V,
+	GRADIENT_H_INV,  // reversed (white -> black)
+	GRADIENT_V_INV,
 	MOVING       // moving bar + frame counter (latency / tearing check)
 };
 
@@ -73,6 +75,8 @@ inline std::string toString(PatternType t) {
 		case PatternType::CHECKER:    return "CHECKER";
 		case PatternType::GRADIENT_H: return "GRADIENT_H";
 		case PatternType::GRADIENT_V: return "GRADIENT_V";
+		case PatternType::GRADIENT_H_INV: return "GRADIENT_H_INV";
+		case PatternType::GRADIENT_V_INV: return "GRADIENT_V_INV";
 		case PatternType::MOVING:     return "MOVING";
 	}
 	return "?";

@@ -44,6 +44,8 @@ void ofxTpPatternRenderer::render(ofFbo & fbo, const SurfaceDef & s, PatternType
 		case PatternType::CHECKER:    drawChecker(s); break;
 		case PatternType::GRADIENT_H: drawGradient(s, true); break;
 		case PatternType::GRADIENT_V: drawGradient(s, false); break;
+		case PatternType::GRADIENT_H_INV: drawGradient(s, true, true); break;
+		case PatternType::GRADIENT_V_INV: drawGradient(s, false, true); break;
 		case PatternType::MOVING:     drawMoving(s, time); break;
 	}
 	ofPopStyle();
@@ -168,20 +170,22 @@ void ofxTpPatternRenderer::drawChecker(const SurfaceDef & s) {
 	}
 }
 
-void ofxTpPatternRenderer::drawGradient(const SurfaceDef & s, bool horizontal) {
+void ofxTpPatternRenderer::drawGradient(const SurfaceDef & s, bool horizontal, bool inverted) {
 	ofMesh m;
 	m.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
 	const float w = s.width, h = s.height;
+	const ofFloatColor c0(inverted ? 1 : 0);
+	const ofFloatColor c1(inverted ? 0 : 1);
 	if (horizontal) {
-		m.addVertex({ 0, 0, 0 }); m.addColor(ofFloatColor(0));
-		m.addVertex({ 0, h, 0 }); m.addColor(ofFloatColor(0));
-		m.addVertex({ w, 0, 0 }); m.addColor(ofFloatColor(1));
-		m.addVertex({ w, h, 0 }); m.addColor(ofFloatColor(1));
+		m.addVertex({ 0, 0, 0 }); m.addColor(c0);
+		m.addVertex({ 0, h, 0 }); m.addColor(c0);
+		m.addVertex({ w, 0, 0 }); m.addColor(c1);
+		m.addVertex({ w, h, 0 }); m.addColor(c1);
 	} else {
-		m.addVertex({ 0, 0, 0 }); m.addColor(ofFloatColor(0));
-		m.addVertex({ w, 0, 0 }); m.addColor(ofFloatColor(0));
-		m.addVertex({ 0, h, 0 }); m.addColor(ofFloatColor(1));
-		m.addVertex({ w, h, 0 }); m.addColor(ofFloatColor(1));
+		m.addVertex({ 0, 0, 0 }); m.addColor(c0);
+		m.addVertex({ w, 0, 0 }); m.addColor(c0);
+		m.addVertex({ 0, h, 0 }); m.addColor(c1);
+		m.addVertex({ w, h, 0 }); m.addColor(c1);
 	}
 	m.draw();
 }

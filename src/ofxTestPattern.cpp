@@ -338,7 +338,8 @@ ofxTestPattern::PatternType ofxTestPattern::getPatternType(const std::string & s
 void ofxTestPattern::cyclePatternType() {
 	static const PatternType order[] = {
 		PatternType::GRID, PatternType::COLOR_BARS, PatternType::WHITE, PatternType::CHECKER,
-		PatternType::GRADIENT_H, PatternType::GRADIENT_V, PatternType::MOVING
+		PatternType::GRADIENT_H, PatternType::GRADIENT_V,
+		PatternType::GRADIENT_H_INV, PatternType::GRADIENT_V_INV, PatternType::MOVING
 	};
 	patternCycleIndex = (patternCycleIndex + 1) % 7;
 	setPatternType("*", order[patternCycleIndex]);
