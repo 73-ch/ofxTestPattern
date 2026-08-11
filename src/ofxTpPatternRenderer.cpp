@@ -46,6 +46,8 @@ void ofxTpPatternRenderer::render(ofFbo & fbo, const SurfaceDef & s, PatternType
 		case PatternType::GRADIENT_V: drawGradient(s, false); break;
 		case PatternType::GRADIENT_H_INV: drawGradient(s, true, true); break;
 		case PatternType::GRADIENT_V_INV: drawGradient(s, false, true); break;
+		case PatternType::GRADIENT_H_DITHER: drawGradientDithered(s, true); break;
+		case PatternType::GRADIENT_V_DITHER: drawGradientDithered(s, false); break;
 		case PatternType::MOVING:     drawMoving(s, time); break;
 	}
 	ofPopStyle();
@@ -188,6 +190,38 @@ void ofxTpPatternRenderer::drawGradient(const SurfaceDef & s, bool horizontal, b
 		m.addVertex({ w, h, 0 }); m.addColor(c1);
 	}
 	m.draw();
+}
+
+// deterministic per-pixel hash -> [0,1). same coords always give the same value,
+// so exports are reproducible across builds/runs
+static inline float tpHash01(int x, int y) {
+	uint32_t hv = (uint32_t)x * 73856093u ^ (uint32_t)y * 19349663u;
+	hv = (hv ^ (hv >> 13)) * 1274126177u;
+	hv ^= hv >> 16;
+	return (hv & 0xFFFFFF) / 16777216.0f;
+}
+
+void ofxTpPatternRenderer::drawGradientDithered(const SurfaceDef & s, bool horizontal) {
+	const int w = s.width, h = s.height;
+	ofPixels pix;
+	pix.allocate(w, h, OF_PIXELS_RGB);
+	unsigned char * p = pix.getData();
+	const int span = horizontal ? (w > 1 ? w - 1 : 1) : (h > 1 ? h - 1 : 1);
+	for (int y = 0; y < h; y++) {
+		for (int x = 0; x < w; x++) {
+			// continuous ramp value in [0,255], threshold-dithered to 8bit
+			const float v = 255.0f * (horizontal ? x : y) / span;
+			const int q = (int)ofClamp(std::floor(v + tpHash01(x, y)), 0, 255);
+			const size_t i = ((size_t)y * w + x) * 3;
+			p[i] = p[i + 1] = p[i + 2] = (unsigned char)q;
+		}
+	}
+	ofImage img;
+	img.setUseTexture(true);
+	img.setFromPixels(pix);
+	img.getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
+	ofSetColor(255);
+	img.draw(0, 0);
 }
 
 void ofxTpPatternRenderer::drawMoving(const SurfaceDef & s, float time) {

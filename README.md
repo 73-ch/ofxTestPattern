@@ -48,8 +48,11 @@ outputs, all described as data.
 Display modes: `CONTENT` (app content only), `PATTERN` (test pattern), `OVERLAY`
 (pattern over content). Pattern types: GRID (numbered grid + circles + color
 bars + label, the default), COLOR_BARS, WHITE, CHECKER, GRADIENT_H/V,
-GRADIENT_H_INV/V_INV (reversed white-to-black gradients), MOVING
-(sweeping bar + frame counter for latency checks).
+GRADIENT_H_INV/V_INV (reversed white-to-black gradients),
+GRADIENT_H_DITHER/V_DITHER (spatially dithered gradients — deterministic
+per-pixel hash breaks 8-bit banding, for isolating quantization vs
+transmission banding), MOVING (sweeping bar + frame counter for latency
+checks).
 
 ### Export
 

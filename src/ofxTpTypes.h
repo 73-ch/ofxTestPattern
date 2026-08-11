@@ -18,6 +18,8 @@ enum class PatternType {
 	GRADIENT_V,
 	GRADIENT_H_INV,  // reversed (white -> black)
 	GRADIENT_V_INV,
+	GRADIENT_H_DITHER,  // spatially dithered (deterministic hash, breaks 8-bit banding)
+	GRADIENT_V_DITHER,
 	MOVING       // moving bar + frame counter (latency / tearing check)
 };
 
@@ -77,6 +79,8 @@ inline std::string toString(PatternType t) {
 		case PatternType::GRADIENT_V: return "GRADIENT_V";
 		case PatternType::GRADIENT_H_INV: return "GRADIENT_H_INV";
 		case PatternType::GRADIENT_V_INV: return "GRADIENT_V_INV";
+		case PatternType::GRADIENT_H_DITHER: return "GRADIENT_H_DITHER";
+		case PatternType::GRADIENT_V_DITHER: return "GRADIENT_V_DITHER";
 		case PatternType::MOVING:     return "MOVING";
 	}
 	return "?";
