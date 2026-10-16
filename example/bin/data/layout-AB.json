@@ -1,0 +1,26 @@
+{
+  "name": "AB",
+  "constraints": {
+    "moduleSize": 0
+  },
+  "style": {
+    "font": "",
+    "borderColor": "#00FF00"
+  },
+  "surfaces": [
+    { "name": "A-Wall",  "width": 2824, "height": 1200, "gridSize": 150, "color": "#00FFFF" },
+    { "name": "A-Floor", "width": 3380, "height": 2160, "gridSize": 270, "color": "#0064FF" },
+    { "name": "B-Wall",  "width": 6528, "height": 916,  "gridSize": 200, "color": "#00FFFF" }
+  ],
+  "outputs": [
+    { "name": "A1-out", "width": 3840, "height": 2160 },
+    { "name": "A2-out", "width": 3840, "height": 2160 },
+    { "name": "B1-out", "width": 3840, "height": 2160 }
+  ],
+  "slices": [
+    { "id": "awall-A",  "surface": "A-Wall",  "src": [0,    0, 2824, 1200], "output": "A1-out", "dst": [0, 0]   },
+    { "id": "afloor-A", "surface": "A-Floor", "src": [0,    0, 3380, 2160], "output": "A2-out", "dst": [0, 0]   },
+    { "id": "bwall-A",  "surface": "B-Wall",  "src": [0,    0, 3840, 916],  "output": "B1-out", "dst": [0, 0]   },
+    { "id": "bwall-B",  "surface": "B-Wall",  "src": [3840, 0, 2688, 916],  "output": "B1-out", "dst": [0, 916] }
+  ]
+}
