@@ -342,7 +342,7 @@ void ofxTestPattern::cyclePatternType() {
 		PatternType::GRADIENT_H_INV, PatternType::GRADIENT_V_INV,
 		PatternType::GRADIENT_H_DITHER, PatternType::GRADIENT_V_DITHER, PatternType::MOVING
 	};
-	patternCycleIndex = (patternCycleIndex + 1) % 9;
+	patternCycleIndex = (patternCycleIndex + 1) % (int)std::size(order);
 	setPatternType("*", order[patternCycleIndex]);
 	ofLogNotice("ofxTestPattern") << "pattern: " << toString(order[patternCycleIndex]);
 }
